@@ -61,6 +61,7 @@ class LinkedList {
     }
     node.next = current;
     current = node;
+    console.log(current);
 
     return this.head;
   }
@@ -96,6 +97,42 @@ class LinkedList {
     }
     return currentNode.value;
   }
+  removeAt(k) {
+    let length = 0;
+    let current = this.head;
+    while (current) {
+      current = current.next;
+      length++;
+    }
+
+    let index = length - k - 1;
+    if (k < 0 || k > length) {
+      return;
+    }
+
+    let currentNode = this.head;
+    let previous;
+    // let count = 0;
+
+    // Remove first
+    if (k === length - 1) {
+      this.head = currentNode.next;
+    }
+    for (let i = 0; i < index; i++) {
+      previous = currentNode;
+      currentNode = currentNode.next;
+    }
+
+    // else {
+    //   while (count < k) {
+    //     count++;
+    //     previous = current;
+    //     current = current.next;
+    //   }
+
+    previous.next = currentNode.next;
+    return this.head;
+  }
   middle(value) {
     const node = new Node(value);
     let count = 0;
@@ -104,7 +141,8 @@ class LinkedList {
       count++;
       current = current.next;
     }
-    let mid = Math.floor(count / 2) - 1;
+    let mid = Math.floor(count / 2);
+    console.log(mid);
     let currentNode = this.head;
     for (let i = 0; i < mid; i++) {
       currentNode = currentNode.next;
@@ -140,17 +178,89 @@ function palindrome(LL) {
     arr[arr.length] = current.value;
     current = current.next;
   }
-  console.log(arr);
   for (let j = arr.length - 1; j >= 0; j--) {
     reversedArr[reversedArr.length] = arr[j];
   }
-  console.log(reversedArr);
   let count = 0;
-  while (arr[count] == reversedArr[count]) {
+  while (arr[count] == reversedArr[count] && count < arr.length) {
     count++;
-    return true;
   }
-  return false;
+  if (count == arr.length || count > arr.length) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function reverse(LL) {
+  let arr = [];
+  let reversedArr = [];
+  let current = LL.head;
+  while (current) {
+    arr[arr.length] = current.value;
+    current = current.next;
+  }
+  reversedArr = arr.reverse();
+  // console.log(reversedArr);
+  let currentNode = LL.head;
+  // console.log(currentNode);
+
+  for (let i = 0; i < reversedArr.length; i++) {
+    let node = new Node(reversedArr[i]);
+    if (!LL.head) {
+      LL.head = node;
+      // return LL.head;
+    }
+    // let count = 0;
+    // console.log('osama', count < reversedArr.length - 1);
+    // while (currentNode && count < reversedArr.length - 1) {
+    // count++;
+    currentNode.next = node;
+    currentNode = currentNode.next;
+  }
+  return LL.head;
+}
+// }
+
+function reverseList(LL) {
+  let prevNode = null;
+  let current = LL.head;
+  while (current !== null) {
+    let nextNode = current.next;
+    current.next = prevNode;
+    prevNode = current;
+    current = nextNode;
+  }
+
+  return prevNode;
+}
+
+function osama(LL, index) {
+  let current = LL.head;
+  let length = 0;
+  while (current) {
+    current = current.next;
+    length++;
+  }
+  if (index < 0 && index > length) {
+    return;
+  }
+
+  let previous;
+  let count = 0;
+
+  // Remove first
+  if (index === 0) {
+    LL.head = currentNode.next;
+  } else {
+    while (count < index) {
+      count++;
+      previous = currentNode;
+      currentNode = currentNode.next;
+    }
+
+    previous.next = currentNode.next;
+  }
 }
 
 let ll = new LinkedList();
@@ -159,18 +269,19 @@ let ll = new LinkedList();
 // ll.insert(5);
 // ll.insert(4);
 // ll.insert(3);
-// console.log(ll.toString());
 ll.append(1);
 ll.append(2);
 ll.append(3);
-ll.append(4);
-// ll.append(3);
+// ll.append(4);
+// ll.append(5);
+console.log(ll.removeAt(2));
 // ll.append(2);
 // ll.append(1);
 // console.log(ll);
 // const palindromee = palindrome(ll);
+// const reversess = osama(ll, 1);
 
-console.log(ll.middle(5));
+// console.log(reversess);
 
 // console.log(zipper.toString());
 
